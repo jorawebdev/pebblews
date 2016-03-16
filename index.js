@@ -22,7 +22,7 @@ wss.on("connection", function(ws) {
     ws.send(JSON.stringify({time:new Date(),mymsg:count}), function() {  })
   }, interval)
 
-  console.log("websocket connection open")
+  console.log("test websocket connection open")
 
   ws.on("close", function() {
     console.log("websocket connection close")
