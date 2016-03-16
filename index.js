@@ -12,12 +12,15 @@ server.listen(port)
 console.log("http server listening on %d", port)
 
 var wss = new WebSocketServer({server: server})
-console.log("websocket server created")
+console.log("websocket server created");
+
+var count = 0;
+var interval = 3000;
 
 wss.on("connection", function(ws) {
   var id = setInterval(function() {
-    ws.send(JSON.stringify({time:new Date(),mymsg:'privet'}), function() {  })
-  }, 1000)
+    ws.send(JSON.stringify({time:new Date(),mymsg:count}), function() {  })
+  }, interval)
 
   console.log("websocket connection open")
 
@@ -25,4 +28,16 @@ wss.on("connection", function(ws) {
     console.log("websocket connection close")
     clearInterval(id)
   })
-})
+});
+
+function doStuff(){
+	count+=1;
+	console.log('doing stuff', count);
+}
+
+function myTimeoutFunction(){
+    doStuff();
+    setTimeout(myTimeoutFunction, interval);
+}
+
+myTimeoutFunction();
